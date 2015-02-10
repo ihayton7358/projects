@@ -1,0 +1,25 @@
+sudo nano /etc/modprobe.d/raspi-blacklist.conf
+comment out blacklist i2c/bcm2708
+press Ctrl - O then enter to save, then Ctrl - X to quit nano
+sudo nano /etc/modules
+type i2c-dev on a new line at end
+press Ctrl - O then enter to save, then Ctrl - X to quit
+sudo reboot
+"sudo" wget http:goo.gl/uPfnfl -O MCP342X.py --no-check-certificate
+this will download a file called MCP342X.py (MCP3427 is the name of the ADC chip)
+"sudo" chmod +x MCP342X.py
+sudo ./MCP342X.py
+output should be:
+CH0: 32767
+CH1: 32767
+
+detecting wind roatation
+
+nano wind_direction/py
+#!/usr/bin/python
+import time
+from MCP342X import *
+adc = MCP342X()
+while True:
+  print adc.read(0)
+  time.sleep(0.1)
